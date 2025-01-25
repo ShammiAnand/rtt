@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
@@ -21,4 +23,4 @@ jobs:
           version: latest
           args: release --clean
         env:
-          RTT_TOKEN: ${{ secrets.RTT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RTT_TOKEN }}
