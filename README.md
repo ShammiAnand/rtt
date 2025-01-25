@@ -5,10 +5,6 @@ CLI tool to convert repository contents into a single text file.
 ## Installation
 
 ```bash
-# Via Go
-go install github.com/shammianand/rtt@latest
-
-# Via Binary
 curl -sfL https://raw.githubusercontent.com/shammianand/rtt/main/install.sh | sh
 ```
 
