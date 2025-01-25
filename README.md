@@ -10,11 +10,6 @@ go install github.com/shammianand/rtt@latest
 
 # Via Binary
 curl -sfL https://raw.githubusercontent.com/shammianand/rtt/main/install.sh | sh
-
-# Manual
-wget https://github.com/shammianand/rtt/releases/latest/download/rtt_$(uname)_$(uname -m).tar.gz
-tar xvf rtt_*.tar.gz
-sudo mv rtt /usr/local/bin/
 ```
 
 ## Usage
