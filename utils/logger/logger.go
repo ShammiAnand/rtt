@@ -8,12 +8,24 @@ import (
 
 var Log *logrus.Logger
 
-func init() {
+func logLevelFromString(logLevel string) logrus.Level {
+	switch logLevel {
+	case "DEBUG":
+		return logrus.DebugLevel
+	case "INFO":
+		return logrus.InfoLevel
+	case "ERROR":
+		return logrus.ErrorLevel
+	default:
+		return logrus.InfoLevel
+	}
+}
+
+func InitLogger(logLevel string) {
 	Log = logrus.New()
 	Log.SetOutput(os.Stdout)
 
-	// TODO: do this from a flag
-	Log.SetLevel(logrus.InfoLevel)
+	Log.SetLevel(logLevelFromString(logLevel))
 
 	Log.SetFormatter(&logrus.TextFormatter{
 		DisableColors:    false,
