@@ -25,7 +25,7 @@ var (
 			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 			defer cancel()
 
-			err := html.ParseHTML(ctx, args[0])
+			err := html.ParseHTML(ctx, args[0], outputFile)
 			if err != nil {
 				logger.Log.Error("Error parsing HTML: ", err)
 				return

@@ -12,9 +12,10 @@ import (
 
 	"github.com/carlmjohnson/requests"
 	"github.com/shammianand/rtt/utils/logger"
+	"jaytaylor.com/html2text"
 )
 
-func ParseHTML(ctx context.Context, url string) error {
+func ParseHTML(ctx context.Context, url string, outputFileName string) error {
 	logger.Log.Info("Parsing HTML from URL: ", url)
 	var content string
 	err := requests.URL(url).ToString(&content).Fetch(ctx)
@@ -22,12 +23,17 @@ func ParseHTML(ctx context.Context, url string) error {
 		return err
 	}
 
-	text, err := extractBodyText(content)
+	text, err := html2text.FromString(content, html2text.Options{PrettyTables: true, OmitLinks: true})
 	if err != nil {
 		return err
 	}
-	os.WriteFile("rtt-html.txt", []byte(text), 0644)
 
+	err = os.WriteFile(outputFileName, []byte(text), 0644)
+	if err != nil {
+		return err
+	}
+
+	logger.Log.Info("HTML parsed successfully and written to file: ", outputFileName)
 	return nil
 }
 
