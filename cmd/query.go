@@ -49,8 +49,7 @@ var queryCmd = &cobra.Command{
 			}
 		}
 
-		stream, _ := cmd.Flags().GetBool("stream")
-		if err := chat.ProcessQuery(ctx, tempFile, question, apiKey, stream); err != nil {
+		if err := chat.ProcessQuery(ctx, tempFile, question, apiKey); err != nil {
 			logger.Log.Error(err)
 		}
 
@@ -64,5 +63,4 @@ var queryCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(queryCmd)
-	queryCmd.Flags().Bool("stream", false, "Stream the response")
 }
