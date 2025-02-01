@@ -78,3 +78,7 @@ func extractBodyText(content string) (string, error) {
 
 	return buffer.String(), nil
 }
+
+func IsURL(s string) bool {
+	return strings.HasPrefix(s, "http://") || strings.HasPrefix(s, "https://") || strings.HasPrefix(s, "www.") || strings.Contains(s, ".")
+}
