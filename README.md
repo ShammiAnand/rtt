@@ -6,7 +6,9 @@
 
 ```bash
 curl -sfL https://raw.githubusercontent.com/shammianand/rtt/main/install.sh | sh
+```
 
+```bash
 # Add to your shell config (~/.zshrc or ~/.bashrc):
 export GROQ_API_KEY=sk_xxxx 
 ```
