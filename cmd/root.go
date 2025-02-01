@@ -59,7 +59,6 @@ func init() {
 	viper.SetDefault("license", "apache")
 
 	logger.InitLogger(logLevel)
-	// rootCmd.AddCommand()
 }
 
 func Exectue() {
