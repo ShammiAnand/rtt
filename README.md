@@ -1,6 +1,7 @@
 # rtt
 
-`rtt` is a cli application which allows you to convert a repositories of code into flat files (both `txt` and `md` formats are supported).
+`rtt` is a cli application which allows you to convert a repository of code/files
+and webpages into flat files (both `txt` and `md` formats are supported).
 
 ## Installation
 
