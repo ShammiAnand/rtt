@@ -4,22 +4,47 @@
 
 ## Installation
 
-Install `rtt`
-
 ```bash
-  curl -sfL https://raw.githubusercontent.com/shammianand/rtt/main/install.sh | sh
+curl -sfL https://raw.githubusercontent.com/shammianand/rtt/main/install.sh | sh
+
+# Add to your shell config (~/.zshrc or ~/.bashrc):
+export GROQ_API_KEY=sk_xxxx 
 ```
 
-## Usage/Examples
+## Usage
 
+### Convert Local Directory
 ```bash
-# converts current directory to a single `rtt.md` file
+# Convert current directory to rtt.md
 rtt .
 
-# convert a specific directory to a single `example.txt` file
-rtt /path/to/directory -o example.txt
+# Convert directory to custom output file
+rtt /path/to/dir -o output.md
 ```
 
-## Authors
+### Download Web Pages
+```bash
+# Save webpage as markdown
+rtt url https://example.com -o page.md
+```
 
-- [@shammianand](https://www.github.com/shammianand)
+### Query Content
+```bash
+# Query current directory
+rtt query . "Explain this codebase"
+
+# Query webpage
+rtt query url https://example.com "Summarize this article"
+```
+
+By default, queries use the `Mixtral-8x7b` model with a 32k context window.
+
+For more details:
+```bash
+rtt help
+rtt query --help
+```
+
+## Author
+[@shammianand](https://www.github.com/shammianand)
+
