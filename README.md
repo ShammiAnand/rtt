@@ -5,6 +5,8 @@ and webpages into flat files (both `txt` and `md` formats are supported).
 
 ## Installation
 
+currently only supports macOS & Linux distros
+
 ```bash
 curl -sfL https://raw.githubusercontent.com/shammianand/rtt/main/install.sh | sh
 ```
