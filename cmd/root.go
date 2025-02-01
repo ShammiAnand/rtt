@@ -49,10 +49,6 @@ var (
 	}
 )
 
-func Exectue() {
-	rootCmd.Execute()
-}
-
 func init() {
 	rootCmd.PersistentFlags().StringP("author", "a", "Shammi Anand", "author name for copyright attribution")
 	rootCmd.PersistentFlags().StringVarP(&outputFile, "output", "o", "rtt.md", "output file name")
@@ -63,4 +59,9 @@ func init() {
 	viper.SetDefault("license", "apache")
 
 	logger.InitLogger(logLevel)
+	// rootCmd.AddCommand()
+}
+
+func Exectue() {
+	rootCmd.Execute()
 }
