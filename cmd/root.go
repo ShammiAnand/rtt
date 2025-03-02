@@ -21,17 +21,12 @@ var (
 	outputFile string
 	logLevel   string
 	rootCmd    = &cobra.Command{
-		Use:     "rtt",
+		Use:     "rtt [path]",
 		Short:   "Converts a directory to a `md` file",
 		Long:    `rtt is a CLI tool that converts a directory to a markdown file with the same name as the directory.`,
 		Example: `rtt /path/to/directory`,
-		Run: func(cmd *cobra.Command, args []string) {
-
-			if len(args) > 1 {
-				logger.Log.Error("only one dir at a time is allowed")
-				return
-			}
-
+		Args:    cobra.MaximumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
 			var walkPath string
 			if len(args) == 0 {
 				walkPath = GetCurrentDir()
@@ -41,10 +36,7 @@ var (
 					walkPath = GetCurrentDir()
 				}
 			}
-
-			if err := walker.WalkAndExtract(walkPath, outputFile); err != nil {
-				logger.Log.Error(err)
-			}
+			return walker.WalkAndExtract(walkPath, outputFile)
 		},
 	}
 )
@@ -61,6 +53,6 @@ func init() {
 	logger.InitLogger(logLevel)
 }
 
-func Exectue() {
+func Execute() {
 	rootCmd.Execute()
 }
