@@ -21,11 +21,14 @@ export GROQ_API_KEY=sk_xxxx
 
 ### Convert Local Directory
 ```bash
-# Convert current directory to rtt.md
+# Convert current directory to rtt.txt (optimized format)
+rtt
+
+# Convert current directory to rtt.txt (explicit)
 rtt .
 
 # Convert directory to custom output file
-rtt /path/to/dir -o output.md
+rtt /path/to/dir -o output.txt
 ```
 
 ### Download Web Pages
@@ -42,6 +45,29 @@ rtt query . "Explain this codebase"
 # Query webpage
 rtt query url https://example.com "Summarize this article"
 ```
+
+## Features
+
+- **Current Directory Support**: Run `rtt` without arguments to process the current directory
+- **Automatic Cache Filtering**: Always skips cache files, build artifacts, and non-code/text files
+- **Optimized Text Output**: Always creates minimal-formatting text files that save tokens for LLM processing
+- **Comprehensive File Support**: Processes code files, text files, markdown, configuration files, and more
+
+## File Filtering
+
+The tool automatically skips:
+- Cache files (`.cache`, `.tmp`, `.log`, etc.)
+- Build artifacts (`node_modules`, `target`, `build`, `dist`)
+- System files (`.DS_Store`, `Thumbs.db`)
+- Binary and non-text files
+
+## Output Format
+
+The tool always creates optimized text files with:
+- Minimal formatting and no extra spaces
+- Simple `FILE: path` headers for each file
+- No markdown syntax or file separators
+- Ideal for token-efficient LLM processing
 
 By default, queries use the `Mixtral-8x7b` model with a 32k context window.
 

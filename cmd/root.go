@@ -22,10 +22,12 @@ var (
 	logLevel   string
 	rootCmd    = &cobra.Command{
 		Use:     "rtt [path]",
-		Short:   "Converts a directory to a `md` file",
-		Long:    `rtt is a CLI tool that converts a directory to a markdown file with the same name as the directory.`,
-		Example: `rtt /path/to/directory`,
-		Args:    cobra.MaximumNArgs(1),
+		Short:   "Converts a directory to an optimized text file",
+		Long:    `rtt is a CLI tool that converts a directory to an optimized text file, automatically skipping cache files and using minimal formatting to save tokens.`,
+		Example: `rtt
+rtt /path/to/directory
+rtt /path/to/directory -o output.txt`,
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var walkPath string
 			if len(args) == 0 {
@@ -36,14 +38,21 @@ var (
 					walkPath = GetCurrentDir()
 				}
 			}
-			return walker.WalkAndExtract(walkPath, outputFile)
+			
+			// Always use optimized text output and skip cache files
+			filter := walker.FileFilter{
+				SkipCacheFiles: true,
+				OptimizedText:  true,
+			}
+			
+			return walker.WalkAndExtract(walkPath, outputFile, filter)
 		},
 	}
 )
 
 func init() {
 	rootCmd.PersistentFlags().StringP("author", "a", "Shammi Anand", "author name for copyright attribution")
-	rootCmd.PersistentFlags().StringVarP(&outputFile, "output", "o", "rtt.md", "output file name")
+	rootCmd.PersistentFlags().StringVarP(&outputFile, "output", "o", "rtt.txt", "output file name")
 	rootCmd.PersistentFlags().StringVarP(&logLevel, "log", "l", "INFO", "verbosity of the logger")
 
 	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
