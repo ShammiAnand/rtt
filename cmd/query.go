@@ -43,7 +43,12 @@ var queryCmd = &cobra.Command{
 				return
 			}
 		} else {
-			if err := walker.WalkAndExtract(source, tempFile); err != nil {
+			// Use default filter for query operations
+			filter := walker.FileFilter{
+				SkipCacheFiles: true, // Skip cache files by default for queries
+				OptimizedText:  false, // Use markdown format for queries
+			}
+			if err := walker.WalkAndExtract(source, tempFile, filter); err != nil {
 				logger.Log.Error(err)
 				return
 			}

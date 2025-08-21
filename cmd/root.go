@@ -18,14 +18,18 @@ func GetCurrentDir() string {
 }
 
 var (
-	outputFile string
-	logLevel   string
-	rootCmd    = &cobra.Command{
+	outputFile     string
+	logLevel       string
+	skipCacheFiles bool
+	optimizedText  bool
+	rootCmd        = &cobra.Command{
 		Use:     "rtt [path]",
-		Short:   "Converts a directory to a `md` file",
-		Long:    `rtt is a CLI tool that converts a directory to a markdown file with the same name as the directory.`,
-		Example: `rtt /path/to/directory`,
-		Args:    cobra.MaximumNArgs(1),
+		Short:   "Converts a directory to a `md` or optimized `txt` file",
+		Long:    `rtt is a CLI tool that converts a directory to a markdown file or optimized text file with the same name as the directory.`,
+		Example: `rtt /path/to/directory
+rtt . -o output.txt --optimized-text
+rtt --skip-cache -o optimized.txt --optimized-text`,
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var walkPath string
 			if len(args) == 0 {
@@ -36,7 +40,14 @@ var (
 					walkPath = GetCurrentDir()
 				}
 			}
-			return walker.WalkAndExtract(walkPath, outputFile)
+			
+			// Create file filter based on flags
+			filter := walker.FileFilter{
+				SkipCacheFiles: skipCacheFiles,
+				OptimizedText:  optimizedText,
+			}
+			
+			return walker.WalkAndExtract(walkPath, outputFile, filter)
 		},
 	}
 )
@@ -45,6 +56,8 @@ func init() {
 	rootCmd.PersistentFlags().StringP("author", "a", "Shammi Anand", "author name for copyright attribution")
 	rootCmd.PersistentFlags().StringVarP(&outputFile, "output", "o", "rtt.md", "output file name")
 	rootCmd.PersistentFlags().StringVarP(&logLevel, "log", "l", "INFO", "verbosity of the logger")
+	rootCmd.PersistentFlags().BoolVarP(&skipCacheFiles, "skip-cache", "s", false, "skip cache files and non-code/text files")
+	rootCmd.PersistentFlags().BoolVarP(&optimizedText, "optimized-text", "t", false, "create optimized text file with minimal formatting to save tokens")
 
 	viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
 	viper.SetDefault("author", "Shammi Anand shammianand101@gmail.com")
