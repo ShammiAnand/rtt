@@ -43,10 +43,10 @@ var queryCmd = &cobra.Command{
 				return
 			}
 		} else {
-			// Use default filter for query operations
+			// Always use optimized text output and skip cache files for queries
 			filter := walker.FileFilter{
-				SkipCacheFiles: true, // Skip cache files by default for queries
-				OptimizedText:  false, // Use markdown format for queries
+				SkipCacheFiles: true,
+				OptimizedText:  true,
 			}
 			if err := walker.WalkAndExtract(source, tempFile, filter); err != nil {
 				logger.Log.Error(err)
